@@ -1,0 +1,24 @@
+{
+    "name": "goez/mink-page-objects",
+    "description": "Page Objects Pattern for Mink",
+    "type": "package",
+    "require": {
+        "behat/mink": "^1.7",
+        "phpunit/phpunit": "^4.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^0.9.4"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jace Ju",
+            "email": "jaceju@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Goez\\PageObjects\\": "src/"
+        }
+    }
+}
