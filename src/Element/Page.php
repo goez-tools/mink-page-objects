@@ -63,7 +63,7 @@ class Page extends PageObject
      * @param $name
      * @return PageObject
      */
-    public function getElement($name)
+    public function getPartialElement($name)
     {
         if (in_array($name, $this->elements)) {
             return $this->factory->createPartialElement($name, $this->session);
