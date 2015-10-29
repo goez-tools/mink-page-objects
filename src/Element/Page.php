@@ -59,4 +59,14 @@ class Page extends PageObject
         return $this->baseUrl . ltrim($this->path, '/');
     }
 
+    /**
+     * @param $name
+     * @return PageObject
+     */
+    public function getElement($name)
+    {
+        if (in_array($name, $this->elements)) {
+            return $this->factory->createPartialElement($name, $this->session);
+        }
+    }
 }
