@@ -5,6 +5,7 @@ use Behat\Mink\Selector\SelectorsHandler;
 use Behat\Mink\Session;
 use Example\Articles;
 use Example\Demo;
+use Example\Footer;
 use Example\Navigation;
 use Goez\PageObjects\Factory;
 
@@ -55,13 +56,26 @@ class PageTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Navigation::class, $element);
     }
 
-    public function testGetElementWithXpathSelectorFromPage()
+    /**
+     * @param $name
+     * @param $expectedClass
+     * @dataProvider selectorProvider
+     */
+    public function testGetElementWithSelectorFromPage($name, $expectedClass)
     {
         $page = new Demo('http://localhost', $this->session);
         $page->setFactory($this->factory);
 
-        $element = $page->getElement('Articles');
+        $element = $page->getElement($name);
 
-        $this->assertInstanceOf(Articles::class, $element);
+        $this->assertInstanceOf($expectedClass, $element);
+    }
+
+    public function selectorProvider()
+    {
+        return [
+            ['Articles', Articles::class],
+            ['Footer', Footer::class],
+        ];
     }
 }
