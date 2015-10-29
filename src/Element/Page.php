@@ -4,7 +4,6 @@ namespace Goez\PageObjects\Element;
 
 use Behat\Mink\Element\DocumentElement;
 use Behat\Mink\Session;
-use Goez\PageObjects\Factory;
 use Goez\PageObjects\PageObject;
 
 class Page extends PageObject
