@@ -3,6 +3,7 @@
 use Behat\Mink\Driver\CoreDriver;
 use Behat\Mink\Selector\SelectorsHandler;
 use Behat\Mink\Session;
+use Example\Articles;
 use Example\Demo;
 use Example\Navigation;
 use Goez\PageObjects\Factory;
@@ -52,5 +53,15 @@ class PageTest extends PHPUnit_Framework_TestCase
         $element = $page->getElement('Navigation');
 
         $this->assertInstanceOf(Navigation::class, $element);
+    }
+
+    public function testGetElementWithXpathSelectorFromPage()
+    {
+        $page = new Demo('http://localhost', $this->session);
+        $page->setFactory($this->factory);
+
+        $element = $page->getElement('Articles');
+
+        $this->assertInstanceOf(Articles::class, $element);
     }
 }

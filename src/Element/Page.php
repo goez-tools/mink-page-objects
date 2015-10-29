@@ -67,6 +67,9 @@ class Page extends PageObject
     {
         if (in_array($name, $this->elements)) {
             return $this->factory->createPartialElement($name, $this->session);
+        } elseif (isset($this->elements[$name])) {
+            $selector = $this->elements[$name];
+            return $this->factory->createPartialElement($name, $this->session, $selector);
         }
     }
 }
