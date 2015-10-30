@@ -27,16 +27,6 @@ class ContextTest extends PHPUnit_Framework_TestCase
         Mockery::close();
     }
 
-    public function testCreateContextFromSite()
-    {
-        $context = Context::site($this->session, [
-            'baseUrl' => 'http://localhost',
-            'prefix' => 'Example',
-        ]);
-
-        $this->assertInstanceOf(Context::class, $context);
-    }
-
     public function testCreatePageFromContext()
     {
         $context = new Context($this->session, [

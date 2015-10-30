@@ -7,7 +7,7 @@ use Behat\Mink\Session;
 class Context
 {
     /**
-     * @var
+     * @var string
      */
     protected $baseUrl;
 
@@ -16,20 +16,13 @@ class Context
      */
     private $session;
 
+    /**
+     * @var array
+     */
     private $defaultConfig = [
         'baseUrl' => 'http://localhost',
         'prefix' => '',
     ];
-
-    /**
-     * @param Session $session
-     * @param array $config
-     * @return Context
-     */
-    public static function site(Session $session, array $config)
-    {
-        return new Context($session, $config);
-    }
 
     /**
      * @param Session $session

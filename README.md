@@ -73,16 +73,14 @@ $driver = new Selenium2Driver('phantomjs');
 $session = new Session($driver);
 $session->start();
 
-$context = Context::site($session, [
+$context = new Context($session, [
     'baseUrl' => 'https://www.google.com',
     'prefix' => 'Google',
 ]);
 
-/** @var Home $homePage */
-$homePage = $context->createPage('Home');
-$homePage->open();
-
-$homePage->search('example')
+$context->createPage('Home')
+    ->open()
+    ->search('example')
     ->shouldContainText('Example Domain');
 ```
 

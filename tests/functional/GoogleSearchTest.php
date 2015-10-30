@@ -19,7 +19,7 @@ class GoogleSearchTest extends PHPUnit_Framework_TestCase
         $session = new Session($driver);
         $session->start();
 
-        $context = Context::site($session, [
+        $context = new Context($session, [
             'baseUrl' => 'https://www.google.com',
             'prefix' => 'Google',
         ]);
