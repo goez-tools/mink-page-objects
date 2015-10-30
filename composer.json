@@ -1,6 +1,6 @@
 {
     "name": "goez/mink-page-objects",
-    "description": "Page Objects Pattern for Mink",
+    "description": "Implementation of Page Objects Pattern for Mink ",
     "type": "package",
     "require": {
         "behat/mink": "^1.7",
