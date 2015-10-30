@@ -18,13 +18,14 @@ class Home extends Page
     // Declare elements in page
     protected $elements = [
         'Navigation',
+        'SearchForm',
         'Articles' => ['xpath' => '//*[contains(@class, "content")]//ul[contains(@class, "articles")]'],
         'Footer' => ['css' => '.footer'],
     ];
 
     public function search($keyword)
     {
-        $this->getElement('SearchForm')
+        $this->getPartialElement('SearchForm')
             ->search($keyword);
     }
 }
@@ -55,18 +56,15 @@ class SearchForm extends Element
 }
 ```
 
-Instantiating a page object:
+Instantiating a page object and verify keyword searching:
 
 ```php
+// $session: Mink session object
 $context = Context::site('http://localhost', $session);
 $page = $context->createPage('Home');
 $page->open();
-```
-
-Creating an element object:
-
-```php
-$element = $context->createElement('SearchForm');
+$resultPage = $page->search('example');
+$resultPage->shouldContainText('This is an example');
 ```
 
 ## License
