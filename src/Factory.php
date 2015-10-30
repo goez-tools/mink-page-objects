@@ -3,8 +3,6 @@
 namespace Goez\PageObjects;
 
 use Behat\Mink\Session;
-use Goez\PageObjects\Element\Page;
-use Goez\PageObjects\Element\PartialElement;
 
 class Factory
 {

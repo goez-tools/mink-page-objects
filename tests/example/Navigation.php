@@ -2,7 +2,7 @@
 
 namespace Example;
 
-use Goez\PageObjects\Element\PartialElement;
+use Goez\PageObjects\PartialElement;
 
 class Navigation extends PartialElement
 {

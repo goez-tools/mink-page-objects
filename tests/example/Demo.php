@@ -2,7 +2,7 @@
 
 namespace Example;
 
-use Goez\PageObjects\Element\Page;
+use Goez\PageObjects\Page;
 
 class Demo extends Page
 {

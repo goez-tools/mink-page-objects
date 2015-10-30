@@ -1,10 +1,9 @@
 <?php
 
-namespace Goez\PageObjects\Element;
+namespace Goez\PageObjects;
 
 use Behat\Mink\Element\DocumentElement;
 use Behat\Mink\Session;
-use Goez\PageObjects\PageObject;
 
 class Page extends PageObject
 {

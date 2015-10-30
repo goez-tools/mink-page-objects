@@ -1,10 +1,9 @@
 <?php
 
-namespace Goez\PageObjects\Element;
+namespace Goez\PageObjects;
 
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Session;
-use Goez\PageObjects\PageObject;
 
 abstract class PartialElement extends PageObject
 {
