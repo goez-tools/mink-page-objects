@@ -16,27 +16,40 @@ class Context
      */
     private $session;
 
+    private $defaultConfig = [
+        'baseUrl' => 'http://localhost',
+        'prefix' => '',
+    ];
+
     /**
-     * @param $baseUrl
      * @param Session $session
-     * @param string $prefix
+     * @param array $config
      * @return Context
      */
-    public static function site($baseUrl, Session $session, $prefix = '')
+    public static function site(Session $session, array $config)
     {
-        return new Context($baseUrl, $session, $prefix);
+        return new Context($session, $config);
     }
 
     /**
-     * @param string $baseUrl
      * @param Session $session
-     * @param string $prefix
+     * @param array $config
      */
-    public function __construct($baseUrl, Session $session, $prefix = '')
+    public function __construct(Session $session, array $config)
     {
-        $this->baseUrl = $baseUrl;
-        $this->factory = $this->createFactory($prefix);
+        $config = $this->loadConfig($config);
         $this->session = $session;
+        $this->baseUrl = $config['baseUrl'];
+        $this->factory = $this->createFactory($config['prefix']);
+    }
+
+    /**
+     * @param array $config
+     * @return array
+     */
+    protected function loadConfig(array $config)
+    {
+        return array_merge($this->defaultConfig, $config);
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use Behat\Mink\Driver\CoreDriver;
 use Behat\Mink\Selector\SelectorsHandler;
 use Behat\Mink\Session;
 use Example\Demo;
@@ -28,14 +29,20 @@ class ContextTest extends PHPUnit_Framework_TestCase
 
     public function testCreateContextFromSite()
     {
-        $context = Context::site('http://localhost', $this->session, 'Example');
+        $context = Context::site($this->session, [
+            'baseUrl' => 'http://localhost',
+            'prefix' => 'Example',
+        ]);
 
         $this->assertInstanceOf(Context::class, $context);
     }
 
     public function testCreatePageFromContext()
     {
-        $context = new Context('http://localhost', $this->session, 'Example');
+        $context = new Context($this->session, [
+            'baseUrl' => 'http://localhost',
+            'prefix' => 'Example',
+        ]);
 
         $page = $context->createPage('Demo');
 
