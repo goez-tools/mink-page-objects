@@ -11,9 +11,19 @@ class Factory
      */
     protected $prefix = '';
 
-    public function __construct($prefix)
+    /**
+     * @var string
+     */
+    private $baseUrl = 'http://localhost';
+
+    /**
+     * @param $prefix
+     * @param $baseUrl
+     */
+    public function __construct($prefix, $baseUrl)
     {
         $this->prefix = $prefix;
+        $this->baseUrl = $baseUrl;
     }
 
     /**
@@ -36,8 +46,11 @@ class Factory
      * @param $baseUrl
      * @return Page
      */
-    public function createPage($name, Session $session, $baseUrl)
+    public function createPage($name, Session $session, $baseUrl = '')
     {
+        if (empty($baseUrl)) {
+            $baseUrl = $this->baseUrl;
+        }
         return $this->instantiate($name, Page::class, $session, $baseUrl);
     }
 

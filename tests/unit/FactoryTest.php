@@ -31,7 +31,7 @@ class FactoryTest extends PHPUnit_Framework_TestCase
         $this->session->shouldReceive('getSelectorsHandler')
             ->withNoArgs()
             ->andReturn(new SelectorsHandler());
-        $this->factory = new Factory('Example');
+        $this->factory = new Factory('Example', 'http://localhost');
     }
 
     public function tearDown()

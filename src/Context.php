@@ -58,7 +58,7 @@ class Context
      */
     public function createFactory($prefix)
     {
-        return new Factory($prefix);
+        return new Factory($prefix, $this->baseUrl);
     }
 
     /**
@@ -67,6 +67,6 @@ class Context
      */
     public function createPage($name)
     {
-        return $this->factory->createPage($name, $this->session, $this->baseUrl);
+        return $this->factory->createPage($name, $this->session);
     }
 }
