@@ -4,6 +4,7 @@ namespace Goez\PageObjects;
 
 use Behat\Mink\Element\TraversableElement;
 use Behat\Mink\Session;
+use PHPUnit_Framework_Assert as Assert;
 
 abstract class PageObject
 {
@@ -63,5 +64,25 @@ abstract class PageObject
     public function getElement()
     {
         return $this->element;
+    }
+
+    /**
+     * @param $expected
+     */
+    public function shouldContainText($expected)
+    {
+        $actual = $this->element->getText();
+
+        Assert::assertContains($expected, $actual);
+    }
+
+    /**
+     * @param $expected
+     */
+    public function shouldContainHtml($expected)
+    {
+        $actual = $this->element->getHtml();
+
+        Assert::assertContains($expected, $actual);
     }
 }

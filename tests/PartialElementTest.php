@@ -8,15 +8,23 @@ use Example\Navigation;
 
 class PartialElementTest extends PHPUnit_Framework_TestCase
 {
+    private $driver;
+
     private $session;
 
     public function setUp()
     {
-        $driver = Mockery::mock(CoreDriver::class);
+        $this->driver = Mockery::mock(CoreDriver::class);
+        $this->driver->shouldReceive('getText')
+            ->withAnyArgs()
+            ->andReturn('Home');
+        $this->driver->shouldReceive('getHtml')
+            ->withAnyArgs()
+            ->andReturn('<div class="nav"><ul><li><a href="#">Home</a></li></ul>');
         $this->session = Mockery::mock(Session::class);
         $this->session->shouldReceive('getDriver')
             ->withNoArgs()
-            ->andReturn($driver);
+            ->andReturn($this->driver);
         $this->session->shouldReceive('getSelectorsHandler')
             ->withNoArgs()
             ->andReturn(new SelectorsHandler());
@@ -34,5 +42,19 @@ class PartialElementTest extends PHPUnit_Framework_TestCase
         $nodeElement = $element->getElement();
 
         $this->assertInstanceOf(NodeElement::class, $nodeElement);
+    }
+
+    public function testPartialElementShouldContainText()
+    {
+        $element = new Navigation(['css' => '.nav'], $this->session);
+
+        $element->shouldContainText('Home');
+    }
+
+    public function testPartialElementShouldContainHtml()
+    {
+        $element = new Navigation(['css' => '.nav'], $this->session);
+
+        $element->shouldContainHtml('<a href="#">Home</a>');
     }
 }
