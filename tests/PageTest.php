@@ -46,7 +46,7 @@ class PageTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('http://localhost/', $uri);
     }
 
-    public function testGetElementWithoutSelectorFromPage()
+    public function testGetPartialElementWithoutSelectorFromPage()
     {
         $page = new Demo('http://localhost', $this->session);
         $page->setFactory($this->factory);
@@ -61,7 +61,7 @@ class PageTest extends PHPUnit_Framework_TestCase
      * @param $expectedClass
      * @dataProvider selectorProvider
      */
-    public function testGetElementWithSelectorFromPage($name, $expectedClass)
+    public function testGetPartialElementWithSelectorFromPage($name, $expectedClass)
     {
         $page = new Demo('http://localhost', $this->session);
         $page->setFactory($this->factory);
