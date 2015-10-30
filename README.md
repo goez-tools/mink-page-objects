@@ -10,48 +10,53 @@ $ composer require goez/mink-page-objects --dev
 
 ## Usage
 
-Creating a page object class:
+Creating a page class for Google homepage:
 
 ```php
+use Goez\PageObjects\Page;
+
 class Home extends Page
 {
-    // Declare elements in page
     protected $elements = [
-        'Navigation',
-        'SearchForm',
-        'Articles' => ['xpath' => '//*[contains(@class, "content")]//ul[contains(@class, "articles")]'],
-        'Footer' => ['css' => '.footer'],
+        'SearchForm' => ['css' => 'form'],
     ];
 
     public function search($keyword)
     {
-        $this->getPartialElement('SearchForm')
+        return $this->getPartialElement('SearchForm')
             ->search($keyword);
     }
 }
 ```
 
-Creating an element object:
+Create a page class for searched result:
 
 ```php
-class SearchForm extends Element
+use Goez\PageObjects\Page;
+
+class SearchResult extends Page
+{
+}
+```
+
+Creating an element object for searching form:
+
+```php
+use Goez\PageObjects\PartialElement;
+
+class SearchForm extends PartialElement
 {
     /**
-     * @var array|string $selector
-     */
-    protected $selector = '.search-form';
-
-    /**
-     * @param string $keyword
-     *
-     * @return Page
+     * @param $keyword
+     * @return SearchResult
+     * @throws \Behat\Mink\Exception\ElementNotFoundException
      */
     public function search($keyword)
     {
-        $this->fillField('keyword', $keyword);
-        $this->pressButton('Search');
+        $this->element->fillField('q', $keyword);
+        $this->element->submit();
 
-        return $this->getPage('SearchResults');
+        return $this->createPage('SearchResult');
     }
 }
 ```
@@ -59,14 +64,26 @@ class SearchForm extends Element
 Instantiating a page object and verify keyword searching:
 
 ```php
-// $session: Mink session object
+use Behat\Mink\Driver\Selenium2Driver;
+use Behat\Mink\Session;
+use Goez\PageObjects\Context;
+
+$driver = new Selenium2Driver('phantomjs');
+
+$session = new Session($driver);
+$session->start();
+
 $context = Context::site($session, [
-    'baseUrl' => 'http://localhost',
+    'baseUrl' => 'https://www.google.com',
+    'prefix' => 'Google',
 ]);
-$page = $context->createPage('Home');
-$page->open();
-$resultPage = $page->search('example');
-$resultPage->shouldContainText('This is an example');
+
+/** @var Home $homePage */
+$homePage = $context->createPage('Home');
+$homePage->open();
+
+$homePage->search('example')
+    ->shouldContainText('Example Domain');
 ```
 
 ## License
