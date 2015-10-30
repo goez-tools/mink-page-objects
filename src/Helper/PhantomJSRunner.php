@@ -1,6 +1,6 @@
 <?php
 
-namespace Helper;
+namespace Goez\PageObjects\Helper;
 
 trait PhantomJSRunner
 {

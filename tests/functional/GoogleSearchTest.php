@@ -3,7 +3,7 @@
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Session;
 use Goez\PageObjects\Context;
-use Helper\PhantomJSRunner;
+use Goez\PageObjects\Helper\PhantomJSRunner;
 
 class GoogleSearchTest extends PHPUnit_Framework_TestCase
 {
