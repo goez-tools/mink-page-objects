@@ -56,4 +56,12 @@ abstract class PageObject
      * @return void
      */
     abstract protected function initElement();
+
+    /**
+     * @return TraversableElement
+     */
+    public function getElement()
+    {
+        return $this->element;
+    }
 }

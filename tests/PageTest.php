@@ -1,6 +1,7 @@
 <?php
 
 use Behat\Mink\Driver\CoreDriver;
+use Behat\Mink\Element\DocumentElement;
 use Behat\Mink\Selector\SelectorsHandler;
 use Behat\Mink\Session;
 use Example\Articles;
@@ -77,5 +78,14 @@ class PageTest extends PHPUnit_Framework_TestCase
             ['Articles', Articles::class],
             ['Footer', Footer::class],
         ];
+    }
+
+    public function testGetElementInPageObjectShouldBeADocumentElement()
+    {
+        $page = new Demo('http://localhost', $this->session);
+
+        $documentElement = $page->getElement();
+
+        $this->assertInstanceOf(DocumentElement::class, $documentElement);
     }
 }
