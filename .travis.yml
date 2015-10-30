@@ -12,6 +12,6 @@ before_script:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install --dev
   - npm install phantomjs
-  - alias phantomjs ./node_modules/phantomjs/bin/phantomjs
+  - alias phantomjs=./node_modules/phantomjs/bin/phantomjs
 
 script: phpunit
