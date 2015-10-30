@@ -60,7 +60,9 @@ Instantiating a page object and verify keyword searching:
 
 ```php
 // $session: Mink session object
-$context = Context::site('http://localhost', $session);
+$context = Context::site($session, [
+    'baseUrl' => 'http://localhost',
+]);
 $page = $context->createPage('Home');
 $page->open();
 $resultPage = $page->search('example');

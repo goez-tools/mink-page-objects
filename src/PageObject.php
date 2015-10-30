@@ -59,6 +59,15 @@ abstract class PageObject
     abstract protected function initElement();
 
     /**
+     * @param $name
+     * @return Page
+     */
+    public function createPage($name)
+    {
+        return $this->factory->createPage($name, $this->session);
+    }
+
+    /**
      * @return TraversableElement
      */
     public function getElement()
