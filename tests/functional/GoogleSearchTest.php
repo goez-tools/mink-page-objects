@@ -25,7 +25,6 @@ class GoogleSearchTest extends PHPUnit_Framework_TestCase
             'prefix' => 'Google',
         ]);
 
-        /** @var Home $homePage */
         $context->createPage('Home')
             ->open()
             ->search('Jace Ju')
