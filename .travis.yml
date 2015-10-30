@@ -5,13 +5,8 @@ php:
   - 5.6
   - 7
 
-node_js:
-  - 0.12
-
 before_script:
   - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install --dev
-  - npm install phantomjs
-  - alias phantomjs=./node_modules/phantomjs/bin/phantomjs
+  - php composer.phar self-update && php composer.phar install --dev
 
-script: phpunit
+script: phpunit --testsuite unit
