@@ -43,11 +43,12 @@ class Page extends PageObject
     }
 
     /**
-     * @return void
+     * @return Page
      */
     public function open()
     {
         $this->session->visit($this->getUri());
+        return $this;
     }
 
     /**

@@ -26,10 +26,9 @@ class GoogleSearchTest extends PHPUnit_Framework_TestCase
         ]);
 
         /** @var Home $homePage */
-        $homePage = $context->createPage('Home');
-        $homePage->open();
-
-        $homePage->search('Jace Ju')
+        $context->createPage('Home')
+            ->open()
+            ->search('Jace Ju')
             ->shouldContainText('網站製作學習誌');
     }
 }
