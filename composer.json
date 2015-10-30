@@ -4,7 +4,7 @@
     "type": "package",
     "require": {
         "behat/mink": "^1.7",
-        "phpunit/phpunit": "^4.0"
+        "phpunit/phpunit": ">=4.0"
     },
     "require-dev": {
         "mockery/mockery": "^0.9.4"
