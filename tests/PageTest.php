@@ -12,17 +12,27 @@ use Goez\PageObjects\Factory;
 
 class PageTest extends PHPUnit_Framework_TestCase
 {
+    private $driver;
+
     private $session;
 
     private $factory;
 
     public function setUp()
     {
-        $driver = Mockery::mock(CoreDriver::class);
+        $html = file_get_contents(__DIR__ . '/Example/demo.html');
+        $text = strip_tags($html);
+        $this->driver = Mockery::mock(CoreDriver::class);
+        $this->driver->shouldReceive('getText')
+            ->withAnyArgs()
+            ->andReturn($text);
+        $this->driver->shouldReceive('getHtml')
+            ->withAnyArgs()
+            ->andReturn($html);
         $this->session = Mockery::mock(Session::class);
         $this->session->shouldReceive('getDriver')
             ->withNoArgs()
-            ->andReturn($driver);
+            ->andReturn($this->driver);
         $this->session->shouldReceive('getSelectorsHandler')
             ->withNoArgs()
             ->andReturn(new SelectorsHandler());
@@ -87,5 +97,19 @@ class PageTest extends PHPUnit_Framework_TestCase
         $documentElement = $page->getElement();
 
         $this->assertInstanceOf(DocumentElement::class, $documentElement);
+    }
+
+    public function testPageShouldContainText()
+    {
+        $page = new Demo('http://localhost', $this->session);
+
+        $page->shouldContainText('Home');
+    }
+
+    public function testPageShouldContainHtml()
+    {
+        $page = new Demo('http://localhost', $this->session);
+
+        $page->shouldContainHtml('<a href="#">Home</a>');
     }
 }
