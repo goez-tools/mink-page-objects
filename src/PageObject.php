@@ -85,4 +85,24 @@ abstract class PageObject
 
         Assert::assertContains($expected, $actual);
     }
+
+    /**
+     * @param $notExpected
+     */
+    public function shouldNotContainText($notExpected)
+    {
+        $actual = $this->element->getText();
+
+        Assert::assertNotContains($notExpected, $actual);
+    }
+
+    /**
+     * @param $notExpected
+     */
+    public function shouldNotContainHtml($notExpected)
+    {
+        $actual = $this->element->getHtml();
+
+        Assert::assertNotContains($notExpected, $actual);
+    }
 }

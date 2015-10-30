@@ -112,4 +112,19 @@ class PageTest extends PHPUnit_Framework_TestCase
 
         $page->shouldContainHtml('<a href="#">Home</a>');
     }
+
+    public function testPageShouldNotContainText()
+    {
+        $page = new Demo('http://localhost', $this->session);
+
+        $page->shouldNotContainText('Who are you?');
+    }
+
+    public function testPageShouldNotContainHtml()
+    {
+        $page = new Demo('http://localhost', $this->session);
+
+        $page->shouldNotContainHtml('<a href="#">Who are you?</a>');
+    }
+
 }

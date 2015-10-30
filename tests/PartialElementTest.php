@@ -14,13 +14,15 @@ class PartialElementTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        $html = '<div class="nav"><ul><li><a href="#">Home</a></li></ul>';
+        $text = strip_tags($html);
         $this->driver = Mockery::mock(CoreDriver::class);
         $this->driver->shouldReceive('getText')
             ->withAnyArgs()
-            ->andReturn('Home');
+            ->andReturn($text);
         $this->driver->shouldReceive('getHtml')
             ->withAnyArgs()
-            ->andReturn('<div class="nav"><ul><li><a href="#">Home</a></li></ul>');
+            ->andReturn($html);
         $this->session = Mockery::mock(Session::class);
         $this->session->shouldReceive('getDriver')
             ->withNoArgs()
@@ -56,5 +58,19 @@ class PartialElementTest extends PHPUnit_Framework_TestCase
         $element = new Navigation(['css' => '.nav'], $this->session);
 
         $element->shouldContainHtml('<a href="#">Home</a>');
+    }
+
+    public function testPartialElementShouldNotContainText()
+    {
+        $element = new Navigation(['css' => '.nav'], $this->session);
+
+        $element->shouldNotContainText('Who are you?');
+    }
+
+    public function testPartialElementShouldNotContainHtml()
+    {
+        $element = new Navigation(['css' => '.nav'], $this->session);
+
+        $element->shouldNotContainHtml('<a href="#">Who are you?</a>');
     }
 }
