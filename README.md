@@ -1,4 +1,6 @@
-# Implementation of Page Objects Pattern for Mink
+# Page Objects Pattern for Mink
+
+[![Build Status](https://travis-ci.org/jaceju/mink-page-objects.svg?branch=master)](https://travis-ci.org/jaceju/mink-page-objects)
 
 Alpha version
 
