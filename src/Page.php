@@ -4,6 +4,7 @@ namespace Goez\PageObjects;
 
 use Behat\Mink\Element\DocumentElement;
 use Behat\Mink\Session;
+use Closure;
 
 class Page extends PageObject
 {
@@ -43,11 +44,14 @@ class Page extends PageObject
     }
 
     /**
+     * @param Closure $callback
      * @return Page
      */
-    public function open()
+    public function open(Closure $callback)
     {
         $this->session->visit($this->getUri());
+        $cb = $callback->bindTo($this);
+        $cb();
         return $this;
     }
 

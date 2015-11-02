@@ -68,6 +68,14 @@ abstract class PageObject
     }
 
     /**
+     * @return Session
+     */
+    public function getSession()
+    {
+        return $this->session;
+    }
+
+    /**
      * @return TraversableElement
      */
     public function getElement()
