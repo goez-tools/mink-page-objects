@@ -1,12 +1,16 @@
 <?php
 
 use Behat\Mink\Driver\CoreDriver;
+use Behat\Mink\Element\DocumentElement;
+use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Selector\SelectorsHandler;
 use Behat\Mink\Session;
 use Example\Articles;
 use Example\Demo;
 use Example\Navigation;
 use Goez\PageObjects\Factory;
+use Goez\PageObjects\Page;
+use Goez\PageObjects\PageObject;
 use Mockery\MockInterface;
 
 class FactoryTest extends PHPUnit_Framework_TestCase
@@ -48,15 +52,18 @@ class FactoryTest extends PHPUnit_Framework_TestCase
 
     public function testCreatePartialElementWithoutSelector()
     {
-        $element = $this->factory->createPartialElement('Navigation', $this->session);
+        $parent = $this->createMockParent();
+
+        $element = $this->factory->createPartialElement('Navigation', $this->session, null, $parent);
 
         $this->assertInstanceOf(Navigation::class, $element);
     }
 
     public function testCreatePartialElementWithSelector()
     {
+        $parent = $this->createMockParent();
         $selector = ['css' => '.article'];
-        $element = $this->factory->createPartialElement('Articles', $this->session, $selector);
+        $element = $this->factory->createPartialElement('Articles', $this->session, $selector, $parent);
 
         $this->assertInstanceOf(Articles::class, $element);
     }
@@ -75,5 +82,22 @@ class FactoryTest extends PHPUnit_Framework_TestCase
     public function testPartialElementNotFound()
     {
         $this->factory->createPartialElement('NotExists', $this->session);
+    }
+
+    /**
+     * @return MockInterface
+     */
+    protected function createMockParent()
+    {
+        $documentElement = Mockery::mock(DocumentElement::class);
+        $documentElement->shouldReceive('find')
+            ->withAnyArgs()
+            ->andReturn(null);
+
+        $parent = Mockery::mock(PageObject::class);
+        $parent->shouldReceive('getElement')
+            ->withAnyArgs()
+            ->andReturn($documentElement);
+        return $parent;
     }
 }

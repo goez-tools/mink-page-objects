@@ -9,7 +9,7 @@ class SearchForm extends PartialElement
     /**
      * @param $keyword
      * @return SearchResult
-     * @throws \Behat\Mink\Exception\ElementNotFoundException
+     * @throws \Goez\PageObjects\Exception\ElementNotFoundException
      */
     public function search($keyword)
     {

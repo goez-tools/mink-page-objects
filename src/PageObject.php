@@ -9,6 +9,11 @@ use PHPUnit_Framework_Assert as Assert;
 abstract class PageObject
 {
     /**
+     * @var PageObject
+     */
+    protected $parent = null;
+
+    /**
      * @var Session
      */
     protected $session = null;
@@ -45,18 +50,26 @@ abstract class PageObject
 
     /**
      * @param Factory $factory
-     * @return Page
+     * @return PageObject
      */
-    public function setFactory($factory)
+    public function setFactory(Factory $factory)
     {
         $this->factory = $factory;
         return $this;
     }
 
     /**
-     * @return void
+     * @return PageObject
      */
-    abstract protected function initElement();
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param PageObject $parent
+     */
+    abstract protected function initElement(PageObject $parent = null);
 
     /**
      * @param $name

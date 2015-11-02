@@ -4,6 +4,7 @@ use Behat\Mink\Driver\CoreDriver;
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Selector\SelectorsHandler;
 use Behat\Mink\Session;
+use Example\Demo;
 use Example\Navigation;
 
 class PartialElementTest extends PHPUnit_Framework_TestCase
@@ -11,6 +12,8 @@ class PartialElementTest extends PHPUnit_Framework_TestCase
     private $driver;
 
     private $session;
+
+    private $parent;
 
     public function setUp()
     {
@@ -30,6 +33,10 @@ class PartialElementTest extends PHPUnit_Framework_TestCase
         $this->session->shouldReceive('getSelectorsHandler')
             ->withNoArgs()
             ->andReturn(new SelectorsHandler());
+        $this->parent = Mockery::mock(Demo::class);
+        $this->parent->shouldReceive('getElement->find')
+            ->withAnyArgs()
+            ->andReturn(new NodeElement('', $this->session));
     }
 
     public function tearDown()
@@ -39,7 +46,7 @@ class PartialElementTest extends PHPUnit_Framework_TestCase
 
     public function testGetElementInPartialElementShouldBeANodeElement()
     {
-        $element = new Navigation(['css' => '.nav'], $this->session);
+        $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
 
         $nodeElement = $element->getElement();
 
@@ -48,35 +55,35 @@ class PartialElementTest extends PHPUnit_Framework_TestCase
 
     public function testPartialElementShouldContainText()
     {
-        $element = new Navigation(['css' => '.nav'], $this->session);
+        $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
 
         $element->shouldContainText('Home');
     }
 
     public function testPartialElementShouldContainHtml()
     {
-        $element = new Navigation(['css' => '.nav'], $this->session);
+        $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
 
         $element->shouldContainHtml('<a href="#">Home</a>');
     }
 
     public function testPartialElementShouldNotContainText()
     {
-        $element = new Navigation(['css' => '.nav'], $this->session);
+        $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
 
         $element->shouldNotContainText('Who are you?');
     }
 
     public function testPartialElementShouldNotContainHtml()
     {
-        $element = new Navigation(['css' => '.nav'], $this->session);
+        $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
 
         $element->shouldNotContainHtml('<a href="#">Who are you?</a>');
     }
 
     public function testPartialElementShouldContainPatternInText()
     {
-        $element = new Navigation(['css' => '.nav'], $this->session);
+        $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
 
         $element->shouldContainPatternInText('/Ho.+/');
     }
@@ -84,14 +91,14 @@ class PartialElementTest extends PHPUnit_Framework_TestCase
 
     public function testPartialElementShouldContainPatternInHtml()
     {
-        $element = new Navigation(['css' => '.nav'], $this->session);
+        $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
 
         $element->shouldContainPatternInHtml('/<a[^>]+>[^<]+<\/a>/');
     }
 
     public function testPartialElementShouldFindElement()
     {
-        $element = new Navigation(['css' => '.nav'], $this->session);
+        $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
         $this->driver->shouldReceive('find')
             ->withAnyArgs()
             ->andReturn(new NodeElement("//*[@id='home-link']", $this->session));

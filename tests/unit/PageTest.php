@@ -9,6 +9,7 @@ use Example\Demo;
 use Example\Footer;
 use Example\Navigation;
 use Goez\PageObjects\Factory;
+use Mockery\MockInterface;
 
 class PageTest extends PHPUnit_Framework_TestCase
 {
@@ -23,6 +24,9 @@ class PageTest extends PHPUnit_Framework_TestCase
         $html = file_get_contents(__DIR__ . '/Example/demo.html');
         $text = strip_tags($html);
         $this->driver = Mockery::mock(CoreDriver::class);
+        $this->driver->shouldReceive('find')
+            ->withAnyArgs()
+            ->andReturnNull();
         $this->driver->shouldReceive('getText')
             ->withAnyArgs()
             ->andReturn($text);
@@ -126,5 +130,4 @@ class PageTest extends PHPUnit_Framework_TestCase
 
         $page->shouldNotContainHtml('<a href="#">Who are you?</a>');
     }
-
 }

@@ -58,11 +58,12 @@ class Factory
      * @param $name
      * @param Session $session
      * @param mixed $selector
+     * @param PageObject $parent
      * @return mixed
      */
-    public function createPartialElement($name, Session $session, $selector = null)
+    public function createPartialElement($name, Session $session, $selector = null, $parent = null)
     {
-        return $this->instantiate($name, PartialElement::class, $session, $selector);
+        return $this->instantiate($name, PartialElement::class, $session, $selector, $parent);
     }
 
     /**
@@ -70,15 +71,16 @@ class Factory
      * @param $baseClass
      * @param Session $session
      * @param $extra
+     * @param PageObject $parent
      * @return mixed
      */
-    protected function instantiate($name, $baseClass, Session $session, $extra)
+    protected function instantiate($name, $baseClass, Session $session, $extra, PageObject $parent = null)
     {
         $className = $this->generateClassName($name, $this->prefix);
 
         if (is_subclass_of($className, $baseClass)) {
             /** @var PageObject $element */
-            $element = new $className($extra, $session);
+            $element = new $className($extra, $session, $parent);
             $element->setFactory($this);
             return $element;
         }

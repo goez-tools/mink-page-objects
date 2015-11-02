@@ -12,21 +12,25 @@ abstract class PartialElement extends PageObject
     /**
      * @param $selector
      * @param Session $session
+     * @param PageObject $parent
      */
-    public function __construct($selector, Session $session)
+    public function __construct($selector, Session $session, PageObject $parent)
     {
         $this->setSelector($selector);
         $this->setSession($session);
-        $this->initElement();
+        $this->initElement($parent);
     }
 
     /**
-     * @return void
+     * @param PageObject $parent
      */
-    protected function initElement()
+    protected function initElement(PageObject $parent = null)
     {
         list($selectorType, $locator) = $this->getSelectorTypeAndLocator($this->selector);
-        $this->element = $this->session->getPage()->find($selectorType, $locator);
+        if ($parent) {
+            $this->parent = $parent;
+        }
+        $this->element = $this->parent->getElement()->find($selectorType, $locator);
     }
 
     /**

@@ -15,12 +15,13 @@ class Page extends PageObject
     /**
      * @param $baseUrl
      * @param Session $session
+     * @param PageObject $parent
      */
-    public function __construct($baseUrl, Session $session)
+    public function __construct($baseUrl, Session $session, PageObject $parent = null)
     {
         $this->setBaseUrl($baseUrl);
         $this->setSession($session);
-        $this->initElement();
+        $this->initElement($parent);
     }
 
     /**
@@ -36,9 +37,9 @@ class Page extends PageObject
     }
 
     /**
-     * @return void
+     * @param PageObject $parent
      */
-    protected function initElement()
+    protected function initElement(PageObject $parent = null)
     {
         $this->element = new DocumentElement($this->session);
     }
@@ -47,11 +48,13 @@ class Page extends PageObject
      * @param Closure $callback
      * @return Page
      */
-    public function open(Closure $callback)
+    public function open(Closure $callback = null)
     {
         $this->session->visit($this->getUri());
-        $cb = $callback->bindTo($this);
-        $cb();
+        if ($callback) {
+            $cb = $callback->bindTo($this);
+            $cb();
+        }
         return $this;
     }
 
@@ -70,10 +73,10 @@ class Page extends PageObject
     public function getPartialElement($name)
     {
         if (in_array($name, $this->elements)) {
-            return $this->factory->createPartialElement($name, $this->session);
+            return $this->factory->createPartialElement($name, $this->session, null, $this);
         } elseif (isset($this->elements[$name])) {
             $selector = $this->elements[$name];
-            return $this->factory->createPartialElement($name, $this->session, $selector);
+            return $this->factory->createPartialElement($name, $this->session, $selector, $this);
         }
     }
 }
