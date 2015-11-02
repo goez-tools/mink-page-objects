@@ -114,4 +114,11 @@ abstract class PageObject
 
         Assert::assertNotContains($notExpected, $actual);
     }
+
+    protected function getSelectorTypeAndLocator($selector)
+    {
+        $selectorType = is_array($selector) ? key($selector) : 'css';
+        $locator = is_array($selector) ? $selector[$selectorType] : $selector;
+        return [$selectorType, $locator];
+    }
 }

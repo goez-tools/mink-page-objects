@@ -7,7 +7,7 @@ use Behat\Mink\Session;
 
 abstract class PartialElement extends PageObject
 {
-    protected $selector = null;
+    protected $selector = [];
 
     /**
      * @param $selector
@@ -40,10 +40,8 @@ abstract class PartialElement extends PageObject
 
     private function getSelectorAsXpath()
     {
+        list($selectorType, $locator) = $this->getSelectorTypeAndLocator($this->selector);
         $selectorsHandler = $this->session->getSelectorsHandler();
-        $selectorType = is_array($this->selector) ? key($this->selector) : 'css';
-        $locator = is_array($this->selector) ? $this->selector[$selectorType] : $this->selector;
-
         return $selectorsHandler->selectorToXpath($selectorType, $locator);
     }
 }
