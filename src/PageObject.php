@@ -116,6 +116,26 @@ abstract class PageObject
     }
 
     /**
+     * @param $pattern
+     */
+    public function shouldContainPatternInText($pattern)
+    {
+        $actual = $this->element->getText();
+
+        Assert::assertRegExp($pattern, $actual);
+    }
+
+    /**
+     * @param $pattern
+     */
+    public function shouldContainPatternInHtml($pattern)
+    {
+        $actual = $this->element->getHtml();
+
+        Assert::assertRegExp($pattern, $actual);
+    }
+
+    /**
      * @param $selector
      * @return array
      */

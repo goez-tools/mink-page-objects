@@ -73,4 +73,19 @@ class PartialElementTest extends PHPUnit_Framework_TestCase
 
         $element->shouldNotContainHtml('<a href="#">Who are you?</a>');
     }
+
+    public function testPartialElementShouldContainPatternInText()
+    {
+        $element = new Navigation(['css' => '.nav'], $this->session);
+
+        $element->shouldContainPatternInText('/Ho.+/');
+    }
+
+
+    public function testPartialElementShouldContainPatternInHtml()
+    {
+        $element = new Navigation(['css' => '.nav'], $this->session);
+
+        $element->shouldContainPatternInHtml('/<a[^>]+>[^<]+<\/a>/');
+    }
 }
