@@ -14,7 +14,7 @@ class PartialElementTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $html = '<div class="nav"><ul><li><a href="#">Home</a></li></ul>';
+        $html = '<div class="nav"><ul><li id="home-link"><a href="#">Home</a></li></ul>';
         $text = strip_tags($html);
         $this->driver = Mockery::mock(CoreDriver::class);
         $this->driver->shouldReceive('getText')
@@ -87,5 +87,14 @@ class PartialElementTest extends PHPUnit_Framework_TestCase
         $element = new Navigation(['css' => '.nav'], $this->session);
 
         $element->shouldContainPatternInHtml('/<a[^>]+>[^<]+<\/a>/');
+    }
+
+    public function testPartialElementShouldFindElement()
+    {
+        $element = new Navigation(['css' => '.nav'], $this->session);
+        $this->driver->shouldReceive('find')
+            ->withAnyArgs()
+            ->andReturn(new NodeElement("//*[@id='home-link']", $this->session));
+        $element->shouldFindElement(['css' => '#home-link']);
     }
 }

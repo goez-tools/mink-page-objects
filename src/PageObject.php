@@ -145,4 +145,13 @@ abstract class PageObject
         $locator = is_array($selector) ? $selector[$selectorType] : $selector;
         return [$selectorType, $locator];
     }
+
+    public function shouldFindElement($selector)
+    {
+        $selectorType = is_array($selector) ? key($selector) : 'css';
+        $locator = is_array($selector) ? $selector[$selectorType] : $selector;
+        $element = $this->element->find($selectorType, $locator);
+
+        return !is_null($element);
+    }
 }
