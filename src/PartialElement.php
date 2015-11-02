@@ -25,7 +25,8 @@ abstract class PartialElement extends PageObject
      */
     protected function initElement()
     {
-        $this->element = new NodeElement($this->getSelectorAsXpath(), $this->session);
+        list($selectorType, $locator) = $this->getSelectorTypeAndLocator($this->selector);
+        $this->element = $this->session->getPage()->find($selectorType, $locator);
     }
 
     /**
@@ -36,15 +37,5 @@ abstract class PartialElement extends PageObject
         if ($selector) {
             $this->selector = $selector;
         }
-    }
-
-    /**
-     * @return string
-     */
-    private function getSelectorAsXpath()
-    {
-        list($selectorType, $locator) = $this->getSelectorTypeAndLocator($this->selector);
-        $selectorsHandler = $this->session->getSelectorsHandler();
-        return $selectorsHandler->selectorToXpath($selectorType, $locator);
     }
 }
