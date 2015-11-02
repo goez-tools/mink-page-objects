@@ -22,13 +22,18 @@ trait PhantomJSRunner
      */
     protected function ifPhantomJsAlreadyRunning()
     {
-        return fsockopen("localhost", 4444);
+        set_error_handler(function () {});
+        $result = fsockopen("localhost", 4444);
+        fclose($result);
+        restore_error_handler();
+        return !!$result;
     }
 
     protected function runPhantomJS()
     {
         $cmd = 'phantomjs --webdriver=4444 --ssl-protocol=tlsv1 --ignore-ssl-errors=true';
         shell_exec($cmd . " > /dev/null &");
+        sleep(1);
     }
 
     /**
