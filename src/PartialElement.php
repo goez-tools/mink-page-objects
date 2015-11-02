@@ -38,6 +38,9 @@ abstract class PartialElement extends PageObject
         }
     }
 
+    /**
+     * @return string
+     */
     private function getSelectorAsXpath()
     {
         list($selectorType, $locator) = $this->getSelectorTypeAndLocator($this->selector);

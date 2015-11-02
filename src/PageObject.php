@@ -115,6 +115,10 @@ abstract class PageObject
         Assert::assertNotContains($notExpected, $actual);
     }
 
+    /**
+     * @param $selector
+     * @return array
+     */
     protected function getSelectorTypeAndLocator($selector)
     {
         $selectorType = is_array($selector) ? key($selector) : 'css';
