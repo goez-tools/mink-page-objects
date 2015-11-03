@@ -48,7 +48,7 @@ class PageTest extends PHPUnit_Framework_TestCase
         Mockery::close();
     }
 
-    public function testOpen()
+    public function testOpenWithoutCallback()
     {
         $page = new Demo('http://localhost', $this->session);
         $this->session->shouldReceive('visit')
@@ -56,6 +56,23 @@ class PageTest extends PHPUnit_Framework_TestCase
             ->andReturnNull();
 
         $page->open();
+        $uri = $page->getUri();
+
+        $this->assertEquals('http://localhost/', $uri);
+    }
+
+    public function testOpenWithCallback()
+    {
+        $spy = Mockery::mock(function () {});
+        $spy->shouldReceive('call')->once();
+        $page = new Demo('http://localhost', $this->session);
+        $this->session->shouldReceive('visit')
+            ->once()
+            ->andReturnNull();
+
+        $page->open(function () use ($spy) {
+            $spy->call();
+        });
         $uri = $page->getUri();
 
         $this->assertEquals('http://localhost/', $uri);
