@@ -69,6 +69,7 @@ class Page extends PageObject
     /**
      * @param $name
      * @return PageObject
+     * @throw ElementNotFoundException
      */
     public function getPartialElement($name)
     {
@@ -78,5 +79,7 @@ class Page extends PageObject
             $selector = $this->elements[$name];
             return $this->factory->createPartialElement($name, $this->session, $selector, $this);
         }
+
+        throw new ElementNotFoundException();
     }
 }

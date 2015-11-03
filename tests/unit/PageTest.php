@@ -103,6 +103,17 @@ class PageTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf($expectedClass, $element);
     }
 
+    /**
+     * @expectedException Goez\PageObjects\Exception\ElementNotFoundException
+     */
+    public function testGetPartialElementButElementNotFound()
+    {
+        $page = new Demo('http://localhost', $this->session);
+        $page->setFactory($this->factory);
+
+        $page->getPartialElement('ElementNotFound');
+    }
+
     public function selectorProvider()
     {
         return [
