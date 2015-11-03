@@ -61,6 +61,15 @@ class PageTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('http://localhost/', $uri);
     }
 
+    /**
+     * @expectedException BadMethodCallException
+     */
+    public function testMethodNotFound()
+    {
+        $page = new Demo('http://localhost', $this->session);
+        $page->notExistMethod();
+    }
+
     public function testOpenWithCallback()
     {
         $spy = Mockery::mock(function () {});

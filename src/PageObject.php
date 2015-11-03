@@ -2,6 +2,7 @@
 
 namespace Goez\PageObjects;
 
+use BadMethodCallException;
 use Behat\Mink\Element\TraversableElement;
 use Behat\Mink\Session;
 
@@ -46,6 +47,7 @@ abstract class PageObject
      * @param string $name
      * @param array $args
      * @return mixed
+     * @throw BadMethodCallException
      */
     public function __call($name, $args)
     {
@@ -55,7 +57,7 @@ abstract class PageObject
             }
              return call_user_func_array([$this->assert, $name], $args);
         }
-        return false;
+        throw new BadMethodCallException;
     }
 
     /**
