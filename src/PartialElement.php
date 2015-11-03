@@ -30,7 +30,7 @@ abstract class PartialElement extends PageObject
         if ($parent) {
             $this->parent = $parent;
         }
-        $this->element = $this->parent->getElement()->find($selectorType, $locator);
+        $this->element = $this->getParent()->getElement()->find($selectorType, $locator);
     }
 
     /**

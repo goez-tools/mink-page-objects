@@ -5,6 +5,7 @@ namespace Goez\PageObjects;
 use Behat\Mink\Element\DocumentElement;
 use Behat\Mink\Session;
 use Closure;
+use Goez\PageObjects\Exception\ElementNotFoundException;
 
 class Page extends PageObject
 {
@@ -50,7 +51,7 @@ class Page extends PageObject
      */
     public function open(Closure $callback = null)
     {
-        $this->session->visit($this->getUri());
+        $this->getSession()->visit($this->getUri());
         if ($callback) {
             $cb = $callback->bindTo($this);
             $cb();
