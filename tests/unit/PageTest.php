@@ -73,14 +73,14 @@ class PageTest extends PHPUnit_Framework_TestCase
     public function testOpenWithCallback()
     {
         $spy = Mockery::mock(function () {});
-        $spy->shouldReceive('call')->withNoArgs()->once();
+        $spy->shouldReceive('call')->withAnyArgs()->once();
         $page = new Demo('http://localhost', $this->session);
         $this->session->shouldReceive('visit')
             ->once()
             ->andReturnNull();
 
         $page->open(function () use ($spy) {
-            $spy->call();
+            $spy->call($this);
         });
         $uri = $page->getUri();
 
