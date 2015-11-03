@@ -2,7 +2,7 @@
 
 namespace Goez\PageObjects;
 
-use PHPUnit_Framework_Assert as That;
+use Peridot\Leo\Interfaces\Assert as Assertion;
 
 class Assert
 {
@@ -14,6 +14,7 @@ class Assert
     public function __construct(PageObject $element)
     {
         $this->pageObject = $element;
+        $this->assertion = new Assertion;
     }
 
     /**
@@ -23,7 +24,7 @@ class Assert
     {
         $actual = $this->pageObject->getElement()->getText();
 
-        That::assertContains($expected, $actual);
+        $this->assertion->include($actual, $expected);
     }
 
     /**
@@ -33,7 +34,7 @@ class Assert
     {
         $actual = $this->pageObject->getElement()->getHtml();
 
-        That::assertContains($expected, $actual);
+        $this->assertion->include($actual, $expected);
     }
 
     /**
@@ -43,7 +44,7 @@ class Assert
     {
         $actual = $this->pageObject->getElement()->getText();
 
-        That::assertNotContains($notExpected, $actual);
+        $this->assertion->notInclude($actual, $notExpected);
     }
 
     /**
@@ -53,7 +54,7 @@ class Assert
     {
         $actual = $this->pageObject->getElement()->getHtml();
 
-        That::assertNotContains($notExpected, $actual);
+        $this->assertion->notInclude($actual, $notExpected);
     }
 
     /**
@@ -63,7 +64,7 @@ class Assert
     {
         $actual = $this->pageObject->getElement()->getText();
 
-        That::assertRegExp($pattern, $actual);
+        $this->assertion->match($actual, $pattern);
     }
 
     /**
@@ -73,7 +74,7 @@ class Assert
     {
         $actual = $this->pageObject->getElement()->getHtml();
 
-        That::assertRegExp($pattern, $actual);
+        $this->assertion->match($actual, $pattern);
     }
 
     /**
