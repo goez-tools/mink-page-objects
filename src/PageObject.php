@@ -4,7 +4,6 @@ namespace Goez\PageObjects;
 
 use Behat\Mink\Element\TraversableElement;
 use Behat\Mink\Session;
-use PHPUnit_Framework_Assert as Assert;
 
 abstract class PageObject
 {
@@ -37,6 +36,27 @@ abstract class PageObject
      * @var array
      */
     protected $elements = [];
+
+    /**
+     * @var Assert
+     */
+    private $assert;
+
+    /**
+     * @param string $name
+     * @param array $args
+     * @return mixed
+     */
+    public function __call($name, $args)
+    {
+        if (preg_match('/^should/', $name)) {
+            if (null === $this->assert) {
+                $this->assert = new Assert($this);
+            }
+             return call_user_func_array([$this->assert, $name], $args);
+        }
+        return false;
+    }
 
     /**
      * @param Session $session
@@ -97,81 +117,13 @@ abstract class PageObject
     }
 
     /**
-     * @param $expected
-     */
-    public function shouldContainText($expected)
-    {
-        $actual = $this->element->getText();
-
-        Assert::assertContains($expected, $actual);
-    }
-
-    /**
-     * @param $expected
-     */
-    public function shouldContainHtml($expected)
-    {
-        $actual = $this->element->getHtml();
-
-        Assert::assertContains($expected, $actual);
-    }
-
-    /**
-     * @param $notExpected
-     */
-    public function shouldNotContainText($notExpected)
-    {
-        $actual = $this->element->getText();
-
-        Assert::assertNotContains($notExpected, $actual);
-    }
-
-    /**
-     * @param $notExpected
-     */
-    public function shouldNotContainHtml($notExpected)
-    {
-        $actual = $this->element->getHtml();
-
-        Assert::assertNotContains($notExpected, $actual);
-    }
-
-    /**
-     * @param $pattern
-     */
-    public function shouldContainPatternInText($pattern)
-    {
-        $actual = $this->element->getText();
-
-        Assert::assertRegExp($pattern, $actual);
-    }
-
-    /**
-     * @param $pattern
-     */
-    public function shouldContainPatternInHtml($pattern)
-    {
-        $actual = $this->element->getHtml();
-
-        Assert::assertRegExp($pattern, $actual);
-    }
-
-    /**
      * @param $selector
      * @return array
      */
-    protected function getSelectorTypeAndLocator($selector)
+    public function getSelectorTypeAndLocator($selector)
     {
         $selectorType = is_array($selector) ? key($selector) : 'css';
         $locator = is_array($selector) ? $selector[$selectorType] : $selector;
         return [$selectorType, $locator];
-    }
-
-    public function shouldFindElement($selector)
-    {
-        list($selectorType, $locator) = $this->getSelectorTypeAndLocator($selector);
-        $element = $this->element->find($selectorType, $locator);
-
-        return !is_null($element);
     }
 }
