@@ -10,9 +10,9 @@ trait PhantomJSRunner
     protected function startPhantomJS()
     {
         if ($this->ifPhantomJsAlreadyRunning()) {
-            $this->printMessage("PhantomJS already running");
+            $this->printMessage("-");
         } else {
-            $this->printMessage("Starting PhantomJS");
+            $this->printMessage("|");
             $this->runPhantomJS();
         }
     }
@@ -41,6 +41,6 @@ trait PhantomJSRunner
      */
     protected function printMessage($message)
     {
-        fwrite(STDOUT, "$message\n");
+        fwrite(STDOUT, "$message");
     }
 }
