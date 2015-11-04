@@ -66,21 +66,4 @@ class Page extends PageObject
     {
         return $this->baseUrl . ltrim($this->path, '/');
     }
-
-    /**
-     * @param $name
-     * @return PageObject
-     * @throw ElementNotFoundException
-     */
-    public function getPartialElement($name)
-    {
-        if (in_array($name, $this->elements)) {
-            return $this->factory->createPartialElement($name, $this->session, null, $this);
-        } elseif (isset($this->elements[$name])) {
-            $selector = $this->elements[$name];
-            return $this->factory->createPartialElement($name, $this->session, $selector, $this);
-        }
-
-        throw new ElementNotFoundException();
-    }
 }

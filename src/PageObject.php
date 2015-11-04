@@ -5,6 +5,7 @@ namespace Goez\PageObjects;
 use BadMethodCallException;
 use Behat\Mink\Element\TraversableElement;
 use Behat\Mink\Session;
+use Goez\PageObjects\Exception\ElementNotFoundException;
 
 abstract class PageObject
 {
@@ -127,5 +128,22 @@ abstract class PageObject
         $selectorType = is_array($selector) ? key($selector) : 'css';
         $locator = is_array($selector) ? $selector[$selectorType] : $selector;
         return [$selectorType, $locator];
+    }
+
+    /**
+     * @param $name
+     * @return PageObject
+     * @throws ElementNotFoundException
+     */
+    public function getPartialElement($name)
+    {
+        if (in_array($name, $this->elements)) {
+            return $this->factory->createPartialElement($name, $this->session, null, $this);
+        } elseif (isset($this->elements[$name])) {
+            $selector = $this->elements[$name];
+            return $this->factory->createPartialElement($name, $this->session, $selector, $this);
+        }
+
+        throw new ElementNotFoundException();
     }
 }
