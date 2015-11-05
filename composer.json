@@ -3,11 +3,11 @@
     "description": "Implementation of Page Objects Pattern for Mink ",
     "type": "package",
     "require": {
+        "phpunit/phpunit": ">=4.0",
         "behat/mink": "^1.7",
         "peridot-php/leo": "~1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": ">=4.0",
         "mockery/mockery": "^0.9.4",
         "behat/mink-selenium2-driver": "^1.3"
     },
