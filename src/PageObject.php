@@ -7,6 +7,18 @@ use Behat\Mink\Element\TraversableElement;
 use Behat\Mink\Session;
 use Goez\PageObjects\Exception\ElementNotFoundException;
 
+/**
+ * Class PageObject
+ * @package Goez\PageObjects
+ *
+ * @method shouldContainText($expected)
+ * @method shouldContainHtml($expected)
+ * @method shouldNotContainText($notExpected)
+ * @method shouldNotContainHtml($notExpected)
+ * @method shouldContainPatternInText($pattern)
+ * @method shouldContainPatternInHtml($pattern)
+ * @method shouldFindElement($selector)
+ */
 abstract class PageObject
 {
     /**

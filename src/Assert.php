@@ -4,7 +4,7 @@ namespace Goez\PageObjects;
 
 use PHPUnit_Framework_Assert as That;
 
-class Assert
+class Assert implements AssertInterface
 {
     /**
      * @var PageObject
