@@ -47,9 +47,11 @@ abstract class PageObject
     protected $element = null;
 
     /**
+     * Parts of Page or Part
+     *
      * @var array
      */
-    protected $elements = [];
+    protected $parts = [];
 
     /**
      * @var Assert
@@ -149,10 +151,10 @@ abstract class PageObject
      */
     public function getPartialElement($name)
     {
-        if (in_array($name, $this->elements)) {
+        if (in_array($name, $this->parts)) {
             return $this->factory->createPart($name, $this->session, null, $this);
-        } elseif (isset($this->elements[$name])) {
-            $selector = $this->elements[$name];
+        } elseif (isset($this->parts[$name])) {
+            $selector = $this->parts[$name];
             return $this->factory->createPart($name, $this->session, $selector, $this);
         }
 
