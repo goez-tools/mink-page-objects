@@ -2,9 +2,9 @@
 
 namespace Example;
 
-use Goez\PageObjects\PartialElement;
+use Goez\PageObjects\Part;
 
-class Footer extends PartialElement
+class Footer extends Part
 {
 
 }

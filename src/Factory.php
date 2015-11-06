@@ -61,10 +61,24 @@ class Factory
      * @param PageObject $parent
      * @return mixed
      */
+    public function createPart($name, Session $session, $selector = null, $parent = null)
+    {
+        return $this->instantiate($name, Part::class, $session, $selector, $parent);
+    }
+
+    /**
+     * @param $name
+     * @param Session $session
+     * @param mixed $selector
+     * @param PageObject $parent
+     * @return mixed
+     * @deprecated
+     */
     public function createPartialElement($name, Session $session, $selector = null, $parent = null)
     {
-        return $this->instantiate($name, PartialElement::class, $session, $selector, $parent);
+        return $this->createPart($name, $session, $selector, $parent);
     }
+
 
     /**
      * @param $name

@@ -2,9 +2,9 @@
 
 namespace Example;
 
-use Goez\PageObjects\PartialElement;
+use Goez\PageObjects\Part;
 
-class Navigation extends PartialElement
+class Navigation extends Part
 {
     protected $selector = ['css' => '.nav'];
 }

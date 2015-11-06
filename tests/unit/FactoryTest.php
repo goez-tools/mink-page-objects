@@ -54,7 +54,7 @@ class FactoryTest extends PHPUnit_Framework_TestCase
     {
         $parent = $this->createMockParent();
 
-        $element = $this->factory->createPartialElement('Navigation', $this->session, null, $parent);
+        $element = $this->factory->createPart('Navigation', $this->session, null, $parent);
 
         $this->assertInstanceOf(Navigation::class, $element);
     }
@@ -63,7 +63,7 @@ class FactoryTest extends PHPUnit_Framework_TestCase
     {
         $parent = $this->createMockParent();
         $selector = ['css' => '.article'];
-        $element = $this->factory->createPartialElement('Articles', $this->session, $selector, $parent);
+        $element = $this->factory->createPart('Articles', $this->session, $selector, $parent);
 
         $this->assertInstanceOf(Articles::class, $element);
     }
@@ -81,7 +81,7 @@ class FactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testPartialElementNotFound()
     {
-        $this->factory->createPartialElement('NotExists', $this->session);
+        $this->factory->createPart('NotExists', $this->session);
     }
 
     /**

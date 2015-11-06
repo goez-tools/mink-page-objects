@@ -150,10 +150,10 @@ abstract class PageObject
     public function getPartialElement($name)
     {
         if (in_array($name, $this->elements)) {
-            return $this->factory->createPartialElement($name, $this->session, null, $this);
+            return $this->factory->createPart($name, $this->session, null, $this);
         } elseif (isset($this->elements[$name])) {
             $selector = $this->elements[$name];
-            return $this->factory->createPartialElement($name, $this->session, $selector, $this);
+            return $this->factory->createPart($name, $this->session, $selector, $this);
         }
 
         throw new ElementNotFoundException();

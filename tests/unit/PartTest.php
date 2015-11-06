@@ -7,7 +7,7 @@ use Behat\Mink\Session;
 use Example\Demo;
 use Example\Navigation;
 
-class PartialElementTest extends PHPUnit_Framework_TestCase
+class PartTest extends PHPUnit_Framework_TestCase
 {
     private $driver;
 
@@ -44,7 +44,7 @@ class PartialElementTest extends PHPUnit_Framework_TestCase
         Mockery::close();
     }
 
-    public function testGetElementInPartialElementShouldBeANodeElement()
+    public function testGetElementInPartShouldBeANodeElement()
     {
         $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
 
@@ -53,35 +53,35 @@ class PartialElementTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(NodeElement::class, $nodeElement);
     }
 
-    public function testPartialElementShouldContainText()
+    public function testPartShouldContainText()
     {
         $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
 
         $element->shouldContainText('Home');
     }
 
-    public function testPartialElementShouldContainHtml()
+    public function testPartShouldContainHtml()
     {
         $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
 
         $element->shouldContainHtml('<a href="#">Home</a>');
     }
 
-    public function testPartialElementShouldNotContainText()
+    public function testPartShouldNotContainText()
     {
         $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
 
         $element->shouldNotContainText('Who are you?');
     }
 
-    public function testPartialElementShouldNotContainHtml()
+    public function testPartShouldNotContainHtml()
     {
         $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
 
         $element->shouldNotContainHtml('<a href="#">Who are you?</a>');
     }
 
-    public function testPartialElementShouldContainPatternInText()
+    public function testPartShouldContainPatternInText()
     {
         $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
 
@@ -89,14 +89,14 @@ class PartialElementTest extends PHPUnit_Framework_TestCase
     }
 
 
-    public function testPartialElementShouldContainPatternInHtml()
+    public function testPartShouldContainPatternInHtml()
     {
         $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
 
         $element->shouldContainPatternInHtml('/<a[^>]+>[^<]+<\/a>/');
     }
 
-    public function testPartialElementShouldFindElement()
+    public function testPartShouldFindElement()
     {
         $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
         $this->driver->shouldReceive('find')

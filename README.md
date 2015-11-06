@@ -44,9 +44,9 @@ class SearchResult extends Page
 Creating an element object for searching form:
 
 ```php
-use Goez\PageObjects\PartialElement;
+use Goez\PageObjects\Part;
 
-class SearchForm extends PartialElement
+class SearchForm extends Part
 {
     /**
      * @param $keyword

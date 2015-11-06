@@ -2,9 +2,9 @@
 
 namespace Google;
 
-use Goez\PageObjects\PartialElement;
+use Goez\PageObjects\Part;
 
-class SearchForm extends PartialElement
+class SearchForm extends Part
 {
     /**
      * @param $keyword
