@@ -12,7 +12,7 @@ class Home extends Page
 
     public function search($keyword)
     {
-        return $this->getPartialElement('SearchForm')
+        return $this->getPart('SearchForm')
             ->search($keyword);
     }
 }

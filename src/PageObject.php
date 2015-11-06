@@ -149,7 +149,7 @@ abstract class PageObject
      * @return PageObject
      * @throws ElementNotFoundException
      */
-    public function getPartialElement($name)
+    public function getPart($name)
     {
         if (in_array($name, $this->parts)) {
             return $this->factory->createPart($name, $this->session, null, $this);
@@ -159,5 +159,15 @@ abstract class PageObject
         }
 
         throw new ElementNotFoundException();
+    }
+
+    /**
+     * @param $name
+     * @return PageObject
+     * @deprecated
+     */
+    public function getPartialElement($name)
+    {
+        return $this->getPart($name);
     }
 }

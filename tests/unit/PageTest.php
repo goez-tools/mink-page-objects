@@ -92,7 +92,7 @@ class PageTest extends PHPUnit_Framework_TestCase
         $page = new Demo('http://localhost', $this->session);
         $page->setFactory($this->factory);
 
-        $element = $page->getPartialElement('Navigation');
+        $element = $page->getPart('Navigation');
 
         $this->assertInstanceOf(Navigation::class, $element);
     }
@@ -107,7 +107,7 @@ class PageTest extends PHPUnit_Framework_TestCase
         $page = new Demo('http://localhost', $this->session);
         $page->setFactory($this->factory);
 
-        $element = $page->getPartialElement($name);
+        $element = $page->getPart($name);
 
         $this->assertInstanceOf($expectedClass, $element);
     }
@@ -120,7 +120,7 @@ class PageTest extends PHPUnit_Framework_TestCase
         $page = new Demo('http://localhost', $this->session);
         $page->setFactory($this->factory);
 
-        $page->getPartialElement('ElementNotFound');
+        $page->getPart('ElementNotFound');
     }
 
     public function selectorProvider()
