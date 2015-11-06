@@ -50,20 +50,20 @@ class FactoryTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Demo::class, $page);
     }
 
-    public function testCreatePartialElementWithoutSelector()
+    public function testCreatePartWithoutSelector()
     {
         $parent = $this->createMockParent();
 
-        $element = $this->factory->createPart('Navigation', $this->session, null, $parent);
+        $element = $this->factory->createPart('Navigation', $parent, null);
 
         $this->assertInstanceOf(Navigation::class, $element);
     }
 
-    public function testCreatePartialElementWithSelector()
+    public function testCreatePartWithSelector()
     {
         $parent = $this->createMockParent();
         $selector = ['css' => '.article'];
-        $element = $this->factory->createPart('Articles', $this->session, $selector, $parent);
+        $element = $this->factory->createPart('Articles', $parent, $selector);
 
         $this->assertInstanceOf(Articles::class, $element);
     }
@@ -95,6 +95,9 @@ class FactoryTest extends PHPUnit_Framework_TestCase
             ->andReturn(null);
 
         $parent = Mockery::mock(PageObject::class);
+        $parent->shouldReceive('getSession')
+            ->withAnyArgs()
+            ->andReturn($this->session);
         $parent->shouldReceive('getElement')
             ->withAnyArgs()
             ->andReturn($documentElement);

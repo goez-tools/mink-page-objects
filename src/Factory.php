@@ -51,19 +51,18 @@ class Factory
         if (empty($baseUrl)) {
             $baseUrl = $this->baseUrl;
         }
-        return $this->instantiate($name, Page::class, $session, $baseUrl);
+        return $this->instantiate($name, $session, $baseUrl);
     }
 
     /**
      * @param $name
-     * @param Session $session
      * @param mixed $selector
      * @param PageObject $parent
      * @return mixed
      */
-    public function createPart($name, Session $session, $selector = null, $parent = null)
+    public function createPart($name, $parent = null, $selector = null)
     {
-        return $this->instantiate($name, Part::class, $session, $selector, $parent);
+        return $this->instantiate($name, $parent, $selector);
     }
 
     /**
@@ -76,27 +75,25 @@ class Factory
      */
     public function createPartialElement($name, Session $session, $selector = null, $parent = null)
     {
-        return $this->createPart($name, $session, $selector, $parent);
+        return $this->createPart($name, $parent, $selector);
     }
 
 
     /**
      * @param $name
-     * @param $baseClass
-     * @param Session $session
      * @param $extra
-     * @param PageObject $parent
+     * @param PageObject|Session $parent
      * @return mixed
      */
-    protected function instantiate($name, $baseClass, Session $session, $extra, PageObject $parent = null)
+    protected function instantiate($name, $parent, $extra)
     {
         $className = $this->generateClassName($name, $this->prefix);
 
-        if (is_subclass_of($className, $baseClass)) {
-            /** @var PageObject $element */
-            $element = new $className($extra, $session, $parent);
-            $element->setFactory($this);
-            return $element;
+        /** @var PageObject $pageObject */
+        if (is_subclass_of($className, PageObject::class)) {
+            $pageObject = new $className($extra, $parent);
+            $pageObject->setFactory($this);
+            return $pageObject;
         }
 
         throw new \InvalidArgumentException(sprintf('Not a page object class: %s', $className));
