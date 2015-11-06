@@ -6,6 +6,7 @@ use Behat\Mink\Selector\SelectorsHandler;
 use Behat\Mink\Session;
 use Example\Demo;
 use Example\Navigation;
+use Goez\PageObjects\Part;
 
 class PartTest extends PHPUnit_Framework_TestCase
 {
@@ -14,6 +15,11 @@ class PartTest extends PHPUnit_Framework_TestCase
     private $session;
 
     private $parent;
+
+    /**
+     * @var Part
+     */
+    private $part;
 
     public function setUp()
     {
@@ -34,9 +40,13 @@ class PartTest extends PHPUnit_Framework_TestCase
             ->withNoArgs()
             ->andReturn(new SelectorsHandler());
         $this->parent = Mockery::mock(Demo::class);
+        $this->parent->shouldReceive('getSession')
+            ->withAnyArgs()
+            ->andReturn($this->session);
         $this->parent->shouldReceive('getElement->find')
             ->withAnyArgs()
             ->andReturn(new NodeElement('', $this->session));
+        $this->part = new Navigation(['css' => '.nav'], $this->parent);
     }
 
     public function tearDown()
@@ -46,62 +56,46 @@ class PartTest extends PHPUnit_Framework_TestCase
 
     public function testGetElementInPartShouldBeANodeElement()
     {
-        $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
-
-        $nodeElement = $element->getElement();
+        $nodeElement = $this->part->getElement();
 
         $this->assertInstanceOf(NodeElement::class, $nodeElement);
     }
 
     public function testPartShouldContainText()
     {
-        $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
-
-        $element->shouldContainText('Home');
+        $this->part->shouldContainText('Home');
     }
 
     public function testPartShouldContainHtml()
     {
-        $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
-
-        $element->shouldContainHtml('<a href="#">Home</a>');
+        $this->part->shouldContainHtml('<a href="#">Home</a>');
     }
 
     public function testPartShouldNotContainText()
     {
-        $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
-
-        $element->shouldNotContainText('Who are you?');
+        $this->part->shouldNotContainText('Who are you?');
     }
 
     public function testPartShouldNotContainHtml()
     {
-        $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
-
-        $element->shouldNotContainHtml('<a href="#">Who are you?</a>');
+        $this->part->shouldNotContainHtml('<a href="#">Who are you?</a>');
     }
 
     public function testPartShouldContainPatternInText()
     {
-        $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
-
-        $element->shouldContainPatternInText('/Ho.+/');
+        $this->part->shouldContainPatternInText('/Ho.+/');
     }
-
 
     public function testPartShouldContainPatternInHtml()
     {
-        $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
-
-        $element->shouldContainPatternInHtml('/<a[^>]+>[^<]+<\/a>/');
+        $this->part->shouldContainPatternInHtml('/<a[^>]+>[^<]+<\/a>/');
     }
 
     public function testPartShouldFindElement()
     {
-        $element = new Navigation(['css' => '.nav'], $this->session, $this->parent);
         $this->driver->shouldReceive('find')
             ->withAnyArgs()
             ->andReturn(new NodeElement("//*[@id='home-link']", $this->session));
-        $element->shouldFindElement(['css' => '#home-link']);
+        $this->part->shouldFindElement(['css' => '#home-link']);
     }
 }

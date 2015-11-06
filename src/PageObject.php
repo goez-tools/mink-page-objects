@@ -104,11 +104,6 @@ abstract class PageObject
     }
 
     /**
-     * @param PageObject $parent
-     */
-    abstract protected function initElement(PageObject $parent = null);
-
-    /**
      * @param $name
      * @return Page
      */
@@ -152,13 +147,13 @@ abstract class PageObject
     public function getPart($name)
     {
         if (in_array($name, $this->parts)) {
-            return $this->factory->createPart($name, $this->session, null, $this);
+            return $this->factory->createPart($name, $this);
         } elseif (isset($this->parts[$name])) {
             $selector = $this->parts[$name];
-            return $this->factory->createPart($name, $this->session, $selector, $this);
+            return $this->factory->createPart($name, $this, $selector);
         }
 
-        throw new ElementNotFoundException();
+        throw new ElementNotFoundException(sprintf('Can\'t find the element: %s', $name));
     }
 
     /**

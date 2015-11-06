@@ -15,13 +15,11 @@ abstract class Part extends PageObject
 
     /**
      * @param $selector
-     * @param Session $session
      * @param PageObject $parent
      */
-    public function __construct($selector, Session $session, PageObject $parent)
+    public function __construct($selector, PageObject $parent)
     {
         $this->setSelector($selector);
-        $this->setSession($session);
         $this->initElement($parent);
     }
 
@@ -34,6 +32,8 @@ abstract class Part extends PageObject
         if ($parent) {
             $this->parent = $parent;
         }
+
+        $this->setSession($this->getParent()->getSession());
         $this->element = $this->getParent()->getElement()->find($selectorType, $locator);
     }
 

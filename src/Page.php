@@ -16,13 +16,12 @@ class Page extends PageObject
     /**
      * @param $baseUrl
      * @param Session $session
-     * @param PageObject $parent
      */
-    public function __construct($baseUrl, Session $session, PageObject $parent = null)
+    public function __construct($baseUrl, Session $session)
     {
         $this->setBaseUrl($baseUrl);
         $this->setSession($session);
-        $this->initElement($parent);
+        $this->initElement();
     }
 
     /**
@@ -38,9 +37,9 @@ class Page extends PageObject
     }
 
     /**
-     * @param PageObject $parent
+     *
      */
-    protected function initElement(PageObject $parent = null)
+    protected function initElement()
     {
         $this->element = new DocumentElement($this->session);
     }
