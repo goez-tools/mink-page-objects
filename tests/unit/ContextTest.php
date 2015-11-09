@@ -34,7 +34,7 @@ class ContextTest extends PHPUnit_Framework_TestCase
             'prefix' => 'Example',
         ]);
 
-        $page = $context->createPage('Demo');
+        $page = $context->createPage(Demo::class);
 
         $this->assertInstanceOf(Demo::class, $page);
     }
