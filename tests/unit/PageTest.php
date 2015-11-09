@@ -92,9 +92,9 @@ class PageTest extends PHPUnit_Framework_TestCase
         $page = new Demo('http://localhost', $this->session);
         $page->setFactory($this->factory);
 
-        $element = $page->getPart(Navigation::class);
+        $part = $page->getPart(Navigation::class);
 
-        $this->assertInstanceOf(Navigation::class, $element);
+        $this->assertInstanceOf(Navigation::class, $part);
     }
 
     /**
@@ -107,9 +107,9 @@ class PageTest extends PHPUnit_Framework_TestCase
         $page = new Demo('http://localhost', $this->session);
         $page->setFactory($this->factory);
 
-        $element = $page->getPart($name);
+        $part = $page->getPart($name);
 
-        $this->assertInstanceOf($expectedClass, $element);
+        $this->assertInstanceOf($expectedClass, $part);
     }
 
     /**
