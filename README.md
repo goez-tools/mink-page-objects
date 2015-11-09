@@ -25,7 +25,7 @@ class Home extends Page
 
     public function search($keyword)
     {
-        return $this->getPartialElement('SearchForm')
+        return $this->getPart(SearchForm::class)
             ->search($keyword);
     }
 }
@@ -58,7 +58,7 @@ class SearchForm extends Part
         $this->element->fillField('q', $keyword);
         $this->element->submit();
 
-        return $this->createPage('SearchResult');
+        return $this->createPage(SearchResult::class);
     }
 }
 ```
@@ -70,20 +70,30 @@ use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Session;
 use Goez\PageObjects\Context;
 
-$driver = new Selenium2Driver('phantomjs');
+class GoogleSearchTest extends PHPUnit_Framework_TestCase
+{
+    // Install phantomjs first
+    // and you can use this trait
+    // for starting phantonjs automatically
+    use PhantomJSRunner;
 
-$session = new Session($driver);
-$session->start();
+    public function testSearchWithKeyword()
+    {
+        $driver = new Selenium2Driver('phantomjs');
 
-$context = new Context($session, [
-    'baseUrl' => 'https://www.google.com',
-    'prefix' => 'Google',
-]);
+        $session = new Session($driver);
+        $session->start();
 
-$context->createPage('Home')
-    ->open()
-    ->search('example')
-    ->shouldContainText('Example Domain');
+        $context = new Context($session, [
+            'baseUrl' => 'https://www.google.com',
+        ]);
+
+        $context->createPage(Home::class)
+            ->open()
+            ->search('example')
+            ->shouldContainText('Example Domain');
+    }
+}
 ```
 
 ## License
