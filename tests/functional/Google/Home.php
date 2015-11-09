@@ -7,12 +7,12 @@ use Goez\PageObjects\Page;
 class Home extends Page
 {
     protected $parts = [
-        'SearchForm' => ['css' => 'form'],
+        SearchForm::class => ['css' => 'form'],
     ];
 
     public function search($keyword)
     {
-        return $this->getPart('SearchForm')
+        return $this->getPart(SearchForm::class)
             ->search($keyword);
     }
 }

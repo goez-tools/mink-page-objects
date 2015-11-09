@@ -16,6 +16,6 @@ class SearchForm extends Part
         $this->element->fillField('q', $keyword);
         $this->element->submit();
 
-        return $this->createPage('SearchResult');
+        return $this->createPage(SearchResult::class);
     }
 }
