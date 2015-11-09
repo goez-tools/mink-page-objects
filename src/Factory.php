@@ -33,6 +33,10 @@ class Factory
      */
     protected function generateClassName($name, $prefix)
     {
+        if (class_exists($name)) {
+            return $name;
+        }
+
         if (is_string($prefix)) {
             $this->prefix = $prefix;
         }

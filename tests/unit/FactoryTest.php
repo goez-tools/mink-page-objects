@@ -2,14 +2,12 @@
 
 use Behat\Mink\Driver\CoreDriver;
 use Behat\Mink\Element\DocumentElement;
-use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Selector\SelectorsHandler;
 use Behat\Mink\Session;
 use Example\Articles;
 use Example\Demo;
 use Example\Navigation;
 use Goez\PageObjects\Factory;
-use Goez\PageObjects\Page;
 use Goez\PageObjects\PageObject;
 use Mockery\MockInterface;
 
@@ -45,7 +43,7 @@ class FactoryTest extends PHPUnit_Framework_TestCase
 
     public function testCreatePage()
     {
-        $page = $this->factory->createPage('Demo', $this->session, 'http://localhost');
+        $page = $this->factory->createPage(Demo::class, $this->session, 'http://localhost');
 
         $this->assertInstanceOf(Demo::class, $page);
     }
@@ -54,7 +52,7 @@ class FactoryTest extends PHPUnit_Framework_TestCase
     {
         $parent = $this->createMockParent();
 
-        $element = $this->factory->createPart('Navigation', $parent, null);
+        $element = $this->factory->createPart(Navigation::class, $parent, null);
 
         $this->assertInstanceOf(Navigation::class, $element);
     }
@@ -63,7 +61,7 @@ class FactoryTest extends PHPUnit_Framework_TestCase
     {
         $parent = $this->createMockParent();
         $selector = ['css' => '.article'];
-        $element = $this->factory->createPart('Articles', $parent, $selector);
+        $element = $this->factory->createPart(Articles::class, $parent, $selector);
 
         $this->assertInstanceOf(Articles::class, $element);
     }
