@@ -9,7 +9,6 @@ use Example\Demo;
 use Example\Footer;
 use Example\Navigation;
 use Goez\PageObjects\Factory;
-use Mockery\MockInterface;
 
 class PageTest extends PHPUnit_Framework_TestCase
 {
@@ -72,7 +71,8 @@ class PageTest extends PHPUnit_Framework_TestCase
 
     public function testOpenWithCallback()
     {
-        $spy = Mockery::mock(function () {});
+        $spy = Mockery::mock(function () {
+        });
         $spy->shouldReceive('call')->withAnyArgs()->once();
         $page = new Demo('http://localhost', $this->session);
         $this->session->shouldReceive('visit')
@@ -92,7 +92,7 @@ class PageTest extends PHPUnit_Framework_TestCase
         $page = new Demo('http://localhost', $this->session);
         $page->setFactory($this->factory);
 
-        $element = $page->getPart('Navigation');
+        $element = $page->getPart(Navigation::class);
 
         $this->assertInstanceOf(Navigation::class, $element);
     }
@@ -126,8 +126,8 @@ class PageTest extends PHPUnit_Framework_TestCase
     public function selectorProvider()
     {
         return [
-            ['Articles', Articles::class],
-            ['Footer', Footer::class],
+            [Articles::class, Articles::class],
+            [Footer::class, Footer::class],
         ];
     }
 
