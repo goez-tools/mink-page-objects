@@ -167,4 +167,25 @@ class PageTest extends PHPUnit_Framework_TestCase
 
         $page->shouldNotContainHtml('<a href="#">Who are you?</a>');
     }
+
+    public function testSeeTitleInPage()
+    {
+        $page = new Demo('http://localhost', $this->session);
+
+        $page->seeTitle('Example');
+    }
+
+    public function testSeeHeadingInPage()
+    {
+        $page = new Demo('http://localhost', $this->session);
+
+        $page->seeHeading('This is level 1 heading');
+    }
+
+    public function testSeeSubHeadingInPage()
+    {
+        $page = new Demo('http://localhost', $this->session);
+
+        $page->seeSubHeading('This is level 2 heading');
+    }
 }
