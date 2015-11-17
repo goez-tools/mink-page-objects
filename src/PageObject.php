@@ -285,4 +285,15 @@ abstract class PageObject
     {
         $this->shouldContainPatternInHtml('/<h2[^>]*>\s*' . $heading . '\s*<\/h2>/');
     }
+
+    /**
+     * @param array $expected
+     */
+    public function seeJson(array $expected)
+    {
+        $result = $this->getElement()->getText();
+        $json = json_decode($result);
+        $expectedJson = json_decode(json_encode($expected));
+        $this->assertEquals($expectedJson, $json);
+    }
 }
