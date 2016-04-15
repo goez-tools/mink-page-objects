@@ -2,6 +2,8 @@
 
 namespace Goez\PageObjects\Helper;
 
+use SebastianBergmann\GlobalState\RuntimeException;
+
 trait PhantomJSRunner
 {
     /**
@@ -9,8 +11,9 @@ trait PhantomJSRunner
      */
     public static function startPhantomJS()
     {
-        shell_exec("pkill phantomjs");
-        $cmd = 'phantomjs --webdriver=4444 --ssl-protocol=tlsv1 --ignore-ssl-errors=true';
+        self::stopPhantomJS();
+        $phantomBin = self::findPhantomJsBin();
+        $cmd = $phantomBin . ' --webdriver=4444 --ssl-protocol=tlsv1 --ignore-ssl-errors=true';
         shell_exec($cmd . " > /dev/null &");
         sleep(1);
     }
@@ -21,5 +24,22 @@ trait PhantomJSRunner
     public static function stopPhantomJS()
     {
         shell_exec("pkill phantomjs");
+    }
+
+    /**
+     * @return string
+     */
+    private static function findPhantomJsBin()
+    {
+        $searchs = [
+            trim(shell_exec('echo "`which phantomjs`"')),
+            realpath(__DIR__ . '/../../../../../node_modules/phantomjs-prebuilt/bin/phantomjs'),
+        ];
+        foreach ($searchs as $phantomJsBin) {
+            if (file_exists($phantomJsBin)) {
+                return $phantomJsBin;
+            }
+        }
+        throw new RuntimeException('PhantomJS is not exists.');
     }
 }
